@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Tone-Up">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#F5E6D8">
+<meta name="description" content="8-week home tone-up for thighs, core, and arms. Bodyweight only.">
+<title>8-Week Tone-Up</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #FBF6F1;
+  --card: #FFFFFF;
+  --ink: #3D2C29;
+  --muted: #7A6560;
+  --accent: #D4785A;
+  --accent-dark: #B85A3D;
+  --sage: #7A9B7E;
+  --sage-dark: #5E7D62;
+  --cream: #F5E6D8;
+  --peach: #F2C4B0;
+  --ok: #5E7D62;
+  --border: #E8D5C8;
+  --shadow: 0 4px 16px rgba(61, 44, 41, 0.08);
+  --radius: 20px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+}
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  padding-top: var(--safe-t);
+  padding-bottom: var(--safe-b);
+}
+button {
+  font: inherit;
+  border: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
+}
+.screen { display: none; flex: 1; flex-direction: column; min-height: 0; }
+.screen.active { display: flex; }
+
+/* Header */
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.topbar h1 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  flex: 1;
+  line-height: 1.2;
+}
+.icon-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  flex-shrink: 0;
+}
+.icon-btn.muted-on { opacity: 0.45; }
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 20px 16px 28px;
+}
+
+/* Home */
+.honest {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.greeting {
+  font-size: 1.65rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.sub {
+  color: var(--muted);
+  margin-bottom: 22px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+.btn-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.big-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  min-height: 72px;
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  text-align: left;
+  border: 2px solid transparent;
+  transition: transform 0.12s ease, border-color 0.12s;
+}
+.big-btn:active { transform: scale(0.98); }
+.big-btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+.big-btn.primary .btn-label,
+.big-btn.primary .btn-hint { color: #fff; }
+.big-btn.primary .btn-hint { opacity: 0.9; }
+.btn-emoji {
+  font-size: 1.75rem;
+  width: 48px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.btn-text { flex: 1; }
+.btn-label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.btn-hint {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.footer-links {
+  margin-top: 24px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.link-btn {
+  flex: 1;
+  min-width: 120px;
+  min-height: 52px;
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+}
+
+/* Workout / exercise */
+.day-badge {
+  display: inline-block;
+  background: var(--sage);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.routine-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0 24px; }
+.routine-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.routine-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.start-routine {
+  width: 100%;
+  min-height: 64px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+.start-routine:active { background: var(--accent-dark); }
+.rest-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  margin-top: 8px;
+}
+.rest-card h2 { font-size: 1.4rem; margin-bottom: 10px; }
+.rest-card p { color: var(--muted); line-height: 1.5; margin-bottom: 12px; }
+
+/* Exercise view */
+.ex-figure {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 160px;
+}
+.ex-figure svg { width: 180px; height: 140px; }
+.ex-name {
+  font-size: 1.55rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+.ex-meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 14px;
+}
+.ex-how {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+.ex-how p + p { margin-top: 8px; }
+.caution {
+  background: #FFF5F0;
+  border: 1px solid var(--peach);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+.mod {
+  font-size: 0.92rem;
+  color: var(--sage-dark);
+  background: #EEF5EF;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+.set-info {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.timer-display {
+  text-align: center;
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin: 8px 0 20px;
+  line-height: 1;
+}
+.timer-label {
+  text-align: center;
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: -4px;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ctrl {
+  flex: 1;
+  min-width: 90px;
+  min-height: 60px;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.ctrl.start { background: var(--sage); color: #fff; }
+.ctrl.start:active { background: var(--sage-dark); }
+.ctrl.done { background: var(--accent); color: #fff; }
+.ctrl.done:active { background: var(--accent-dark); }
+.ctrl.skip {
+  background: var(--card);
+  color: var(--muted);
+  border: 2px solid var(--border);
+  flex: 0.7;
+}
+.progress-bar-wrap {
+  height: 8px;
+  background: var(--cream);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: var(--sage);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+
+/* Done / complete */
+.complete-card {
+  text-align: center;
+  padding: 32px 16px;
+}
+.complete-card .big-check {
+  font-size: 4rem;
+  margin-bottom: 12px;
+}
+.complete-card h2 { font-size: 1.6rem; margin-bottom: 10px; }
+.complete-card p { color: var(--muted); line-height: 1.5; margin-bottom: 24px; }
+
+/* Progress screen */
+.week-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.week-nav h2 { font-size: 1.25rem; }
+.week-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.day-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.day-row .dname { flex: 1; font-weight: 600; }
+.day-row .dtype { font-size: 0.85rem; color: var(--muted); }
+.check-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--cream);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+}
+.check-toggle.on {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: #fff;
+}
+.stats {
+  text-align: center;
+  margin: 20px 0 8px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<section id="screen-home" class="screen active" aria-label="Home">
+  <div class="topbar">
+    <h1>8-week tone-up</h1>
+    <button type="button" class="icon-btn" id="mute-btn" aria-label="Mute sounds" title="Mute">🔊</button>
+  </div>
+  <div class="content">
+    <p class="honest">Muscle gets firmer; loose skin may not fully go away from exercise alone.</p>
+    <p class="greeting">Hi, Melinda</p>
+    <p class="sub">Short home sessions for thighs, core, and arms. Bodyweight only — no heavy lifting.</p>
+    <div class="btn-grid">
+      <button type="button" class="big-btn primary" data-go="today">
+        <span class="btn-emoji">☀️</span>
+        <span class="btn-text">
+          <span class="btn-label">Today</span>
+          <span class="btn-hint">Your 15–20 min plan for this day</span>
+        </span>
+      </button>
+      <button type="button" class="big-btn" data-go="area" data-area="thighs">
+        <span class="btn-emoji">🦵</span>
+        <span class="btn-text">
+          <span class="btn-label">Thighs &amp; glutes</span>
+          <span class="btn-hint">Bridges, wall sits, leg lifts</span>
+        </span>
+      </button>
+      <button type="button" class="big-btn" data-go="area" data-area="core">
+        <span class="btn-emoji">🌿</span>
+        <span class="btn-text">
+          <span class="btn-label">Core</span>
+          <span class="btn-hint">Gentle midsection work</span>
+        </span>
+      </button>
+      <button type="button" class="big-btn" data-go="area" data-area="arms">
+        <span class="btn-emoji">💪</span>
+        <span class="btn-text">
+          <span class="btn-label">Arms</span>
+          <span class="btn-hint">Wall push-ups, circles, dips</span>
+        </span>
+      </button>
+    </div>
+    <div class="footer-links">
+      <button type="button" class="link-btn" data-go="area" data-area="full">Gentle full routine</button>
+      <button type="button" class="link-btn" data-go="progress">Progress</button>
+    </div>
+  </div>
+</section>
+
+<!-- TODAY / AREA LIST -->
+<section id="screen-routine" class="screen" aria-label="Routine">
+  <div class="topbar">
+    <button type="button" class="icon-btn" data-go="home" aria-label="Back">←</button>
+    <h1 id="routine-title">Today</h1>
+    <button type="button" class="icon-btn" id="mute-btn-2" aria-label="Mute sounds">🔊</button>
+  </div>
+  <div class="content" id="routine-content"></div>
+</section>
+
+<!-- EXERCISE -->
+<section id="screen-exercise" class="screen" aria-label="Exercise">
+  <div class="topbar">
+    <button type="button" class="icon-btn" id="ex-back" aria-label="Back">←</button>
+    <h1 id="ex-top-title">Move</h1>
+    <button type="button" class="icon-btn" id="mute-btn-3" aria-label="Mute sounds">🔊</button>
+  </div>
+  <div class="content" id="exercise-content"></div>
+</section>
+
+<!-- PROGRESS -->
+<section id="screen-progress" class="screen" aria-label="Progress">
+  <div class="topbar">
+    <button type="button" class="icon-btn" data-go="home" aria-label="Back">←</button>
+    <h1>Progress</h1>
+    <button type="button" class="icon-btn" id="mute-btn-4" aria-label="Mute sounds">🔊</button>
+  </div>
+  <div class="content" id="progress-content"></div>
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ========== Exercise library ========== */
+  var EX = {
+    gluteBridge: {
+      id: "gluteBridge",
+      name: "Glute bridge",
+      how: [
+        "Lie on your back with knees bent and feet flat on the floor, hip-width apart.",
+        "Press through your heels to lift your hips until your body forms a straight line from shoulders to knees. Lower slowly."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Keep the lower back from arching hard.",
+      mod: "Knees friendly: take a smaller lift. Place a pillow under your head if needed.",
+      reps: "8–12 slow reps",
+      svg: "bridge"
+    },
+    wallSit: {
+      id: "wallSit",
+      name: "Wall sit",
+      how: [
+        "Stand with your back against a wall. Walk your feet forward and slide down until your thighs are about parallel to the floor — or higher if that feels better.",
+        "Hold with knees tracking over ankles. Breathe steadily, then slide back up."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Do not lock or twist the knees.",
+      mod: "Knees friendly: sit higher (shallower bend) and hold a shorter time.",
+      reps: "Hold 20–40 seconds",
+      holdSec: 30,
+      svg: "wallSit"
+    },
+    sideLegLift: {
+      id: "sideLegLift",
+      name: "Side-lying leg lift",
+      how: [
+        "Lie on your side with legs stacked and head resting on your bottom arm or a pillow.",
+        "Lift the top leg slowly a short way, then lower with control. Switch sides after the set."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Keep hips stacked — avoid rolling back.",
+      mod: "Smaller range is fine. Bend the bottom knee for more stability.",
+      reps: "8–12 per side",
+      svg: "sideLeg"
+    },
+    standingMarch: {
+      id: "standingMarch",
+      name: "Standing march",
+      how: [
+        "Stand tall near a wall or chair for balance if you like.",
+        "Lift one knee gently toward hip height, lower it, then switch. Move slowly — this is not running."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Hold the wall for balance anytime.",
+      mod: "Lift the knee only a little. Stay seated and march if standing feels unsteady.",
+      reps: "8–12 per side",
+      svg: "march"
+    },
+    deadBug: {
+      id: "deadBug",
+      name: "Dead bug",
+      how: [
+        "Lie on your back with arms toward the ceiling and knees bent above your hips.",
+        "Slowly lower one arm and the opposite leg toward the floor, then return. Alternate sides. Keep your low back gently pressed down."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. If the back arches, make the motion smaller.",
+      mod: "Keep both knees bent the whole time and only move the arms, or shorten the leg reach.",
+      reps: "8–12 slow reps",
+      svg: "deadBug"
+    },
+    heelSlide: {
+      id: "heelSlide",
+      name: "Heel slide",
+      how: [
+        "Lie on your back with one knee bent and the other leg long.",
+        "Slide the bent heel toward your seat, then slowly slide it away until the leg is almost straight. Switch legs."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Smooth, pain-free range only.",
+      mod: "Knees friendly: shorter slide. Use a sock on a smooth floor or a towel under the heel.",
+      reps: "8–12 per side",
+      svg: "heelSlide"
+    },
+    birdDog: {
+      id: "birdDog",
+      name: "Bird dog",
+      how: [
+        "Start on hands and knees, hands under shoulders, knees under hips.",
+        "Reach one arm forward and the opposite leg back, keeping hips level. Return and switch. Go slow."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Soften the elbows; do not sag the middle.",
+      mod: "Wrists friendly: make fists or rest on forearms. Or lift only the arm, or only the leg.",
+      reps: "8–12 slow reps",
+      svg: "birdDog"
+    },
+    kneeRaise: {
+      id: "kneeRaise",
+      name: "Standing knee raise",
+      how: [
+        "Stand tall, optional light hand on a wall or chair.",
+        "Raise one knee toward hip height, pause briefly, lower with control. Alternate."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Use support for balance.",
+      mod: "Smaller lift. Or do this seated: lift one knee a few inches off the chair.",
+      reps: "8–12 per side",
+      svg: "kneeRaise"
+    },
+    wallPushup: {
+      id: "wallPushup",
+      name: "Wall push-up",
+      how: [
+        "Stand facing a wall, hands on the wall at about shoulder height and width.",
+        "Bend your elbows to bring your chest toward the wall, then press back. Keep a long, easy spine."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Soft wrists — do not force deep bends.",
+      mod: "Wrists friendly: stand closer to the wall for an easier angle, or do fewer reps.",
+      reps: "8–12 slow reps",
+      svg: "wallPush"
+    },
+    armCircles: {
+      id: "armCircles",
+      name: "Arm circles",
+      how: [
+        "Stand or sit tall with arms out to the sides at shoulder height (or lower if shoulders feel tight).",
+        "Make small, slow circles forward, then reverse. Keep the shoulders relaxed."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Smaller circles if shoulders complain.",
+      mod: "Bend the elbows or keep arms lower. Seated is fine.",
+      reps: "8–12 each direction",
+      svg: "armCircles"
+    },
+    chairDip: {
+      id: "chairDip",
+      name: "Chair dip",
+      how: [
+        "Sit on the front edge of a sturdy chair. Hands beside your hips, fingers forward.",
+        "Scoot forward off the seat, bend elbows slightly to lower a little, then press up. Keep feet on the floor. Skip if the chair is not sturdy."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Only a sturdy chair. Shallow bend only.",
+      mod: "Wrists/shoulders: skip this move and do wall push-ups or arm circles instead. Or keep more weight in your feet.",
+      reps: "8–12 slow reps",
+      svg: "chairDip"
+    },
+    seatedKneeExt: {
+      id: "seatedKneeExt",
+      name: "Seated knee extension",
+      how: [
+        "Sit tall in a sturdy chair with feet flat.",
+        "Straighten one knee to lift the foot, pause, lower slowly. Switch legs."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Do not snap the knee straight.",
+      mod: "Knees friendly: only partially straighten. Hold the chair for balance.",
+      reps: "8–12 per side",
+      svg: "kneeExt"
+    },
+    stretchNeck: {
+      id: "stretchNeck",
+      name: "Easy neck stretch",
+      how: [
+        "Sit or stand tall. Gently tip one ear toward the shoulder until you feel a light stretch.",
+        "Hold and breathe, then switch sides. No forcing or circling the head hard."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Keep the stretch mild.",
+      mod: "Use a smaller tilt. Keep looking forward.",
+      reps: "Hold 20–30 sec each side",
+      holdSec: 25,
+      svg: "stretch"
+    },
+    stretchSide: {
+      id: "stretchSide",
+      name: "Seated side reach",
+      how: [
+        "Sit tall. Reach one arm overhead and lean gently to the opposite side.",
+        "Breathe, return to center, then switch."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Soft lean only.",
+      mod: "Keep the hand on your thigh and lean a little instead of reaching overhead.",
+      reps: "Hold 20–30 sec each side",
+      holdSec: 25,
+      svg: "stretch"
+    },
+    stretchCat: {
+      id: "stretchCat",
+      name: "Cat-cow easy",
+      how: [
+        "On hands and knees (or seated), round your back gently as you breathe out.",
+        "Then soften the belly and look slightly up as you breathe in. Move slowly."
+      ],
+      caution: "Stop if you feel pain, dizziness, or joint hurt. Small motions are enough.",
+      mod: "Wrists: do this seated with hands on thighs. Or use fists on the floor.",
+      reps: "8–10 slow breaths",
+      svg: "stretch"
+    }
+  };
+
+  var AREA_ROUTINES = {
+    thighs: {
+      title: "Thighs & glutes",
+      blurb: "About 15 minutes. Slow reps, rest between sets.",
+      moves: ["gluteBridge", "wallSit", "sideLegLift", "standingMarch", "seatedKneeExt"]
+    },
+    core: {
+      title: "Core",
+      blurb: "Gentle midsection work. About 15 minutes.",
+      moves: ["deadBug", "heelSlide", "birdDog", "standingMarch"]
+    },
+    arms: {
+      title: "Arms",
+      blurb: "Wall and chair options. About 15 minutes.",
+      moves: ["wallPushup", "armCircles", "chairDip", "wallPushup"]
+    },
+    full: {
+      title: "Gentle full routine",
+      blurb: "A soft mix for the whole body. About 18 minutes.",
+      moves: ["gluteBridge", "wallPushup", "deadBug", "sideLegLift", "armCircles", "birdDog"]
+    }
+  };
+
+  /* Day of week: 0 Sun … 6 Sat */
+  function todayPlan(dow) {
+    if (dow === 1) {
+      return { type: "strength", title: "Monday — thighs & glutes", badge: "Strength day", moves: AREA_ROUTINES.thighs.moves, blurb: "15–20 minutes. Two sets of each move with rest built in." };
+    }
+    if (dow === 3) {
+      return { type: "strength", title: "Wednesday — core & arms", badge: "Strength day", moves: ["deadBug", "heelSlide", "wallPushup", "armCircles", "birdDog"], blurb: "15–20 minutes. Slow and steady." };
+    }
+    if (dow === 5) {
+      return { type: "strength", title: "Friday — full gentle mix", badge: "Strength day", moves: AREA_ROUTINES.full.moves, blurb: "15–20 minutes. A little of everything." };
+    }
+    if (dow === 0) {
+      return { type: "rest", title: "Sunday — rest", badge: "Rest day", moves: [], blurb: "Rest is part of the plan. Come back Monday, or enjoy a short stretch if you like." };
+    }
+    if (dow === 6) {
+      return { type: "stretch", title: "Saturday — optional stretch", badge: "Stretch or rest", moves: ["stretchNeck", "stretchSide", "stretchCat"], blurb: "Optional and gentle. Or take the day fully off." };
+    }
+    /* Tue / Thu */
+    var dayName = dow === 2 ? "Tuesday" : "Thursday";
+    return { type: "stretch", title: dayName + " — gentle stretch", badge: "Stretch day", moves: ["stretchNeck", "stretchSide", "stretchCat", "heelSlide"], blurb: "Light mobility. Skip anything that does not feel good." };
+  }
+
+  /* ========== SVG figures ========== */
+  function svgFor(key) {
+    var common = 'fill="none" stroke="#3D2C29" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"';
+    var soft = 'fill="#F2C4B0" stroke="#3D2C29" stroke-width="2"';
+    if (key === "bridge") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="20" y="100" width="140" height="8" rx="2" fill="#E8D5C8"/><circle cx="50" cy="78" r="12" ' + soft + '/><path d="M60 80 L100 55 L140 80 L140 100 M100 55 L100 75" ' + common + '/><circle cx="100" cy="48" r="3" fill="#D4785A"/></svg>';
+    }
+    if (key === "wallSit") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="30" y="20" width="10" height="100" fill="#E8D5C8"/><circle cx="78" cy="40" r="12" ' + soft + '/><path d="M70 50 L70 85 L100 85 L100 115 M70 85 L55 115" ' + common + '/></svg>';
+    }
+    if (key === "sideLeg") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="20" y="100" width="140" height="8" rx="2" fill="#E8D5C8"/><circle cx="55" cy="72" r="11" ' + soft + '/><path d="M65 75 L110 75 L140 55 M65 75 L100 95" ' + common + '/></svg>';
+    }
+    if (key === "march" || key === "kneeRaise") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><circle cx="90" cy="32" r="12" ' + soft + '/><path d="M90 44 L90 85 M90 55 L70 75 M90 55 L115 65 M90 85 L75 120 M90 85 L110 100 L105 70" ' + common + '/></svg>';
+    }
+    if (key === "deadBug") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="20" y="100" width="140" height="8" rx="2" fill="#E8D5C8"/><circle cx="70" cy="70" r="11" ' + soft + '/><path d="M80 72 L120 55 M80 78 L120 95 M55 78 L40 100 M55 72 L40 50" ' + common + '/></svg>';
+    }
+    if (key === "heelSlide") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="20" y="100" width="140" height="8" rx="2" fill="#E8D5C8"/><circle cx="50" cy="72" r="11" ' + soft + '/><path d="M60 75 L95 75 L95 100 M60 78 L140 100" ' + common + '/></svg>';
+    }
+    if (key === "birdDog") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><circle cx="95" cy="55" r="10" ' + soft + '/><path d="M40 70 L85 70 L85 100 M85 70 L130 55 M85 100 L130 110" ' + common + '/><rect x="50" y="100" width="80" height="6" rx="2" fill="#E8D5C8"/></svg>';
+    }
+    if (key === "wallPush") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="140" y="20" width="10" height="100" fill="#E8D5C8"/><circle cx="70" cy="40" r="11" ' + soft + '/><path d="M80 48 L130 55 M80 48 L80 90 L100 120 M80 70 L110 85 L130 70" ' + common + '/></svg>';
+    }
+    if (key === "armCircles") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><circle cx="90" cy="40" r="12" ' + soft + '/><path d="M90 52 L90 100 M50 70 Q90 40 130 70 M60 120 L90 100 L120 120" ' + common + '/><circle cx="50" cy="70" r="8" stroke="#D4785A" stroke-width="2" fill="none" stroke-dasharray="4 3"/><circle cx="130" cy="70" r="8" stroke="#D4785A" stroke-width="2" fill="none" stroke-dasharray="4 3"/></svg>';
+    }
+    if (key === "chairDip") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="100" y="55" width="50" height="50" rx="4" fill="#E8D5C8" stroke="#3D2C29" stroke-width="2"/><circle cx="70" cy="45" r="11" ' + soft + '/><path d="M78 55 L105 60 M78 55 L78 85 L95 100 M78 70 L105 75 M60 100 L78 85" ' + common + '/></svg>';
+    }
+    if (key === "kneeExt") {
+      return '<svg viewBox="0 0 180 140" aria-hidden="true"><rect x="50" y="70" width="50" height="40" rx="3" fill="#E8D5C8" stroke="#3D2C29" stroke-width="2"/><circle cx="75" cy="40" r="11" ' + soft + '/><path d="M75 51 L75 70 M75 85 L130 75 M55 110 L75 85 L95 110" ' + common + '/></svg>';
+    }
+    /* stretch default */
+    return '<svg viewBox="0 0 180 140" aria-hidden="true"><circle cx="90" cy="36" r="12" ' + soft + '/><path d="M90 48 L90 95 M90 60 L55 50 M90 60 L130 45 M70 120 L90 95 L115 120" ' + common + '/></svg>';
+  }
+
+  /* ========== State ========== */
+  var muted = false;
+  var audioCtx = null;
+  var unlocked = false;
+  var currentRoutine = null;
+  var currentIndex = 0;
+  var currentSet = 1; /* 1 or 2 */
+  var phase = "work"; /* work | rest | done */
+  var timerId = null;
+  var secondsLeft = 0;
+  var timerRunning = false;
+  var progressWeek = 1; /* 1–8 viewed */
+  var returnScreen = "home";
+
+  var STORAGE_KEY = "toneup-progress-v1";
+  var MUTE_KEY = "toneup-muted";
+  var WEEK_START_KEY = "toneup-week-start";
+
+  function loadProgress() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+  function saveProgress(data) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) { /* ignore */ }
+  }
+  function getWeekStart() {
+    try {
+      var s = localStorage.getItem(WEEK_START_KEY);
+      if (s) return parseInt(s, 10);
+      var now = Date.now();
+      localStorage.setItem(WEEK_START_KEY, String(now));
+      return now;
+    } catch (e) {
+      return Date.now();
+    }
+  }
+  function currentWeekNum() {
+    var start = getWeekStart();
+    var days = Math.floor((Date.now() - start) / 86400000);
+    var w = Math.floor(days / 7) + 1;
+    if (w < 1) w = 1;
+    if (w > 8) w = 8;
+    return w;
+  }
+  function checkKey(week, dow) {
+    return "w" + week + "-d" + dow;
+  }
+
+  /* ========== Audio (Web Audio only after tap) ========== */
+  function ensureAudio() {
+    if (!unlocked) return;
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      audioCtx = new AC();
+    }
+    if (audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+  }
+  function unlockAudio() {
+    unlocked = true;
+    ensureAudio();
+  }
+  function beep(freq, dur, type) {
+    if (muted || !unlocked) return;
+    ensureAudio();
+    if (!audioCtx) return;
+    try {
+      var osc = audioCtx.createOscillator();
+      var gain = audioCtx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.value = freq;
+      gain.gain.value = 0.08;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      var t = audioCtx.currentTime;
+      gain.gain.setValueAtTime(0.08, t);
+      gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+      osc.start(t);
+      osc.stop(t + dur + 0.02);
+    } catch (e) { /* ignore */ }
+  }
+  function soundStart() { beep(523, 0.12); }
+  function soundDone() { beep(659, 0.15); setTimeout(function () { beep(784, 0.2); }, 120); }
+  function soundTick() { beep(440, 0.05, "triangle"); }
+
+  function updateMuteButtons() {
+    var label = muted ? "🔇" : "🔊";
+    var buttons = document.querySelectorAll("#mute-btn, #mute-btn-2, #mute-btn-3, #mute-btn-4");
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].textContent = label;
+      buttons[i].classList.toggle("muted-on", muted);
+      buttons[i].setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
+    }
+  }
+  function toggleMute() {
+    unlockAudio();
+    muted = !muted;
+    try { localStorage.setItem(MUTE_KEY, muted ? "1" : "0"); } catch (e) { /* ignore */ }
+    updateMuteButtons();
+    if (!muted) soundStart();
+  }
+
+  /* ========== Navigation ========== */
+  function showScreen(id) {
+    var screens = document.querySelectorAll(".screen");
+    for (var i = 0; i < screens.length; i++) {
+      screens[i].classList.remove("active");
+    }
+    var el = document.getElementById(id);
+    if (el) el.classList.add("active");
+    window.scrollTo(0, 0);
+    var content = el && el.querySelector(".content");
+    if (content) content.scrollTop = 0;
+  }
+
+  function stopTimer() {
+    if (timerId) {
+      clearInterval(timerId);
+      timerId = null;
+    }
+    timerRunning = false;
+  }
+
+  /* ========== Render routine list ========== */
+  function renderRoutine(plan, source) {
+    currentRoutine = { moves: plan.moves.slice(), title: plan.title, type: plan.type, source: source || "today" };
+    returnScreen = source === "area" ? "home" : "home";
+    var html = "";
+    if (plan.badge) {
+      html += '<span class="day-badge">' + escapeHtml(plan.badge) + "</span>";
+    }
+    html += "<p class=\"sub\">" + escapeHtml(plan.blurb || "") + "</p>";
+
+    if (plan.type === "rest" || plan.moves.length === 0) {
+      html += '<div class="rest-card"><h2>Rest day</h2><p>' + escapeHtml(plan.blurb) + "</p>";
+      html += '<p>You can still open Thighs, Core, or Arms from Home if you want a short session.</p>';
+      html += '<button type="button" class="start-routine" data-go="home">Back to Home</button></div>';
+      document.getElementById("routine-title").textContent = plan.title.split("—")[0].trim() || "Today";
+      document.getElementById("routine-content").innerHTML = html;
+      showScreen("screen-routine");
+      return;
+    }
+
+    html += '<div class="routine-list">';
+    for (var i = 0; i < plan.moves.length; i++) {
+      var m = EX[plan.moves[i]];
+      html += '<div class="routine-item"><span class="routine-num">' + (i + 1) + "</span><span>" + escapeHtml(m.name) + "</span></div>";
+    }
+    html += "</div>";
+    html += '<p class="ex-meta">2 sets · 8–12 slow reps (or timed holds) · rest built in</p>';
+    html += '<button type="button" class="start-routine" id="btn-start-routine">Start routine</button>';
+    document.getElementById("routine-title").textContent = plan.title.indexOf("—") >= 0 ? plan.title.split("—")[0].trim() : plan.title;
+    document.getElementById("routine-content").innerHTML = html;
+    showScreen("screen-routine");
+    document.getElementById("btn-start-routine").addEventListener("click", function () {
+      unlockAudio();
+      soundStart();
+      currentIndex = 0;
+      currentSet = 1;
+      phase = "work";
+      startExerciseView();
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function workDuration(move) {
+    if (move.holdSec) return move.holdSec;
+    return 45; /* ~ time for slow reps */
+  }
+
+  function startExerciseView() {
+    stopTimer();
+    if (!currentRoutine || currentIndex >= currentRoutine.moves.length) {
+      showComplete();
+      return;
+    }
+    phase = "work";
+    timerRunning = false;
+    var moveId = currentRoutine.moves[currentIndex];
+    var move = EX[moveId];
+    secondsLeft = workDuration(move);
+    renderExercise();
+    showScreen("screen-exercise");
+  }
+
+  function renderExercise() {
+    var moveId = currentRoutine.moves[currentIndex];
+    var move = EX[moveId];
+    var totalSteps = currentRoutine.moves.length * 2; /* 2 sets */
+    var doneSteps = currentIndex * 2 + (currentSet - 1);
+    if (phase === "rest") doneSteps = currentIndex * 2 + 1;
+    var pct = Math.min(100, Math.round((doneSteps / totalSteps) * 100));
+
+    document.getElementById("ex-top-title").textContent =
+      "Move " + (currentIndex + 1) + " of " + currentRoutine.moves.length;
+
+    var html = "";
+    html += '<div class="progress-bar-wrap"><div class="progress-bar" style="width:' + pct + '%"></div></div>';
+    html += '<div class="ex-figure">' + svgFor(move.svg) + "</div>";
+    html += '<h2 class="ex-name">' + escapeHtml(move.name) + "</h2>";
+
+    if (phase === "rest") {
+      html += '<p class="set-info">Rest · next up set ' + currentSet + "</p>";
+      html += '<p class="timer-label">Rest</p>';
+      html += '<div class="timer-display" id="timer-num">' + formatTime(secondsLeft) + "</div>";
+      html += '<div class="caution">Shake out gently. Breathe. Skip rest anytime if you feel ready.</div>';
+    } else {
+      html += '<p class="set-info">Set ' + currentSet + " of 2 · " + escapeHtml(move.reps) + "</p>";
+      html += '<div class="ex-how">';
+      for (var i = 0; i < move.how.length; i++) {
+        html += "<p>" + escapeHtml(move.how[i]) + "</p>";
+      }
+      html += "</div>";
+      html += '<div class="caution">⚠️ ' + escapeHtml(move.caution) + "</div>";
+      html += '<div class="mod">💡 ' + escapeHtml(move.mod) + "</div>";
+      html += '<p class="timer-label">Timer</p>';
+      html += '<div class="timer-display" id="timer-num">' + formatTime(secondsLeft) + "</div>";
+    }
+
+    html += '<div class="controls">';
+    if (!timerRunning) {
+      html += '<button type="button" class="ctrl start" id="btn-timer-start">Start</button>';
+    } else {
+      html += '<button type="button" class="ctrl start" id="btn-timer-start">Pause</button>';
+    }
+    html += '<button type="button" class="ctrl done" id="btn-timer-done">Done</button>';
+    html += '<button type="button" class="ctrl skip" id="btn-timer-skip">Skip</button>';
+    html += "</div>";
+
+    document.getElementById("exercise-content").innerHTML = html;
+
+    document.getElementById("btn-timer-start").addEventListener("click", onStartPause);
+    document.getElementById("btn-timer-done").addEventListener("click", onDone);
+    document.getElementById("btn-timer-skip").addEventListener("click", onSkip);
+  }
+
+  function formatTime(s) {
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return m + ":" + (r < 10 ? "0" : "") + r;
+  }
+
+  function onStartPause() {
+    unlockAudio();
+    if (timerRunning) {
+      stopTimer();
+      renderExercise();
+      return;
+    }
+    soundStart();
+    timerRunning = true;
+    renderExercise();
+    timerId = setInterval(function () {
+      secondsLeft -= 1;
+      if (secondsLeft <= 0) {
+        secondsLeft = 0;
+        stopTimer();
+        soundDone();
+        advanceAfterWork();
+        return;
+      }
+      if (secondsLeft <= 3) soundTick();
+      var el = document.getElementById("timer-num");
+      if (el) el.textContent = formatTime(secondsLeft);
+    }, 1000);
+  }
+
+  function onDone() {
+    unlockAudio();
+    soundDone();
+    stopTimer();
+    advanceAfterWork();
+  }
+
+  function onSkip() {
+    unlockAudio();
+    beep(392, 0.08);
+    stopTimer();
+    /* Skip current set piece */
+    advanceAfterWork();
+  }
+
+  function advanceAfterWork() {
+    if (phase === "rest") {
+      phase = "work";
+      var move = EX[currentRoutine.moves[currentIndex]];
+      secondsLeft = workDuration(move);
+      timerRunning = false;
+      renderExercise();
+      return;
+    }
+    /* finished a work set */
+    if (currentSet === 1) {
+      currentSet = 2;
+      phase = "rest";
+      secondsLeft = 25;
+      timerRunning = false;
+      renderExercise();
+      return;
+    }
+    /* finished set 2 → next move */
+    currentSet = 1;
+    currentIndex += 1;
+    if (currentIndex >= currentRoutine.moves.length) {
+      showComplete();
+      return;
+    }
+    phase = "rest";
+    secondsLeft = 20;
+    timerRunning = false;
+    renderExercise();
+  }
+
+  function showComplete() {
+    stopTimer();
+    markTodayDone();
+    soundDone();
+    document.getElementById("ex-top-title").textContent = "Nice work";
+    var html = '<div class="complete-card">';
+    html += '<div class="big-check">✓</div>';
+    html += "<h2>Session complete</h2>";
+    html += "<p>You showed up. That is what counts. Rest well — Progress is updated.</p>";
+    html += '<button type="button" class="start-routine" id="btn-done-home">Back to Home</button>';
+    html += "</div>";
+    document.getElementById("exercise-content").innerHTML = html;
+    showScreen("screen-exercise");
+    document.getElementById("btn-done-home").addEventListener("click", function () {
+      showScreen("screen-home");
+    });
+  }
+
+  function markTodayDone() {
+    var data = loadProgress();
+    var w = currentWeekNum();
+    var dow = new Date().getDay();
+    data[checkKey(w, dow)] = true;
+    /* also mark a generic session count */
+    data.sessions = (data.sessions || 0) + 1;
+    saveProgress(data);
+  }
+
+  /* ========== Progress UI ========== */
+  function renderProgress() {
+    progressWeek = progressWeek || currentWeekNum();
+    if (progressWeek < 1) progressWeek = 1;
+    if (progressWeek > 8) progressWeek = 8;
+    var data = loadProgress();
+    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var dayTypes = ["Rest", "Strength", "Stretch", "Strength", "Stretch", "Strength", "Stretch / rest"];
+
+    var html = '<div class="week-nav">';
+    html += '<button type="button" class="icon-btn" id="week-prev" aria-label="Previous week">‹</button>';
+    html += "<h2>Week " + progressWeek + " of 8</h2>";
+    html += '<button type="button" class="icon-btn" id="week-next" aria-label="Next week">›</button>';
+    html += "</div>";
+
+    var checked = 0;
+    html += '<div class="week-grid">';
+    for (var d = 0; d < 7; d++) {
+      var on = !!data[checkKey(progressWeek, d)];
+      if (on) checked++;
+      html += '<div class="day-row">';
+      html += '<button type="button" class="check-toggle' + (on ? " on" : "") + '" data-dow="' + d + '" aria-label="Toggle ' + dayNames[d] + '">' + (on ? "✓" : "") + "</button>";
+      html += '<div><div class="dname">' + dayNames[d] + '</div><div class="dtype">' + dayTypes[d] + "</div></div>";
+      html += "</div>";
+    }
+    html += "</div>";
+    html += '<p class="stats">' + checked + " of 7 days checked · " + (data.sessions || 0) + " sessions logged</p>";
+    html += '<p class="sub" style="margin-top:12px;text-align:center">Tap a circle to check or uncheck. No fail state — just a friendly record.</p>';
+
+    document.getElementById("progress-content").innerHTML = html;
+    showScreen("screen-progress");
+
+    document.getElementById("week-prev").addEventListener("click", function () {
+      if (progressWeek > 1) { progressWeek--; renderProgress(); }
+    });
+    document.getElementById("week-next").addEventListener("click", function () {
+      if (progressWeek < 8) { progressWeek++; renderProgress(); }
+    });
+    var toggles = document.querySelectorAll(".check-toggle");
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].addEventListener("click", function (ev) {
+        unlockAudio();
+        var dow = parseInt(ev.currentTarget.getAttribute("data-dow"), 10);
+        var prog = loadProgress();
+        var key = checkKey(progressWeek, dow);
+        prog[key] = !prog[key];
+        saveProgress(prog);
+        if (prog[key]) soundDone();
+        renderProgress();
+      });
+    }
+  }
+
+  /* ========== Wire up ========== */
+  document.body.addEventListener("click", function firstTap() {
+    unlockAudio();
+  }, { once: true, passive: true });
+
+  function onNavClick(e) {
+    var t = e.target.closest("[data-go]");
+    if (!t) return;
+    var go = t.getAttribute("data-go");
+    unlockAudio();
+    if (go === "home") {
+      stopTimer();
+      showScreen("screen-home");
+      return;
+    }
+    if (go === "today") {
+      var plan = todayPlan(new Date().getDay());
+      renderRoutine(plan, "today");
+      return;
+    }
+    if (go === "area") {
+      var area = t.getAttribute("data-area");
+      var ar = AREA_ROUTINES[area];
+      if (!ar) return;
+      renderRoutine({
+        type: "strength",
+        title: ar.title,
+        badge: "On demand",
+        moves: ar.moves,
+        blurb: ar.blurb
+      }, "area");
+      return;
+    }
+    if (go === "progress") {
+      progressWeek = currentWeekNum();
+      renderProgress();
+    }
+  }
+
+  document.getElementById("screen-home").addEventListener("click", onNavClick);
+  document.getElementById("screen-routine").addEventListener("click", onNavClick);
+  document.getElementById("screen-progress").addEventListener("click", onNavClick);
+
+  document.getElementById("ex-back").addEventListener("click", function () {
+    stopTimer();
+    if (currentRoutine) {
+      renderRoutine({
+        type: currentRoutine.type || "strength",
+        title: currentRoutine.title,
+        badge: "",
+        moves: currentRoutine.moves,
+        blurb: "Pick up where you left off, or start again."
+      }, currentRoutine.source);
+    } else {
+      showScreen("screen-home");
+    }
+  });
+
+  var muteIds = ["mute-btn", "mute-btn-2", "mute-btn-3", "mute-btn-4"];
+  for (var mi = 0; mi < muteIds.length; mi++) {
+    document.getElementById(muteIds[mi]).addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleMute();
+    });
+  }
+
+  try {
+    muted = localStorage.getItem(MUTE_KEY) === "1";
+  } catch (e) { muted = false; }
+  updateMuteButtons();
+  getWeekStart();
+})();
+</script>
+</body>
+</html>
